@@ -11,3 +11,4 @@ Week one:
 Week zero:
 - Implementing CNNs from scratch
 - Building resnet34 from scratch
+- Learning some fundamental libraries: einops, ensum
