@@ -1,0 +1,21 @@
+{
+    "os": "macOS-12.5-arm64-arm-64bit",
+    "python": "3.9.13",
+    "heartbeatAt": "2022-11-06T01:12:08.415476",
+    "startedAt": "2022-11-06T01:12:08.067288",
+    "docker": null,
+    "cpu_count": 10,
+    "cuda": null,
+    "args": null,
+    "state": "running",
+    "program": "w2/w2d1-jvsc-da50e2ea-e2ad-43f0-9b42-e475731e99c313380a12-2b9e-4da4-8a3c-29335d5f12be.ipynb",
+    "root": "/Users/codyrushing/Documents/dev/GitHub/cody_ARENA",
+    "git": {
+        "remote": "https://github.com/starship006/ARENA-work.git",
+        "commit": "607c4c01098d836f4f26b6c8bc4ed33df4a6a9b8"
+    },
+    "email": "thisiscodyr@yahoo.com",
+    "host": "wireless-10-148-129-37.public.utexas.edu",
+    "username": "codyrushing",
+    "executable": "/Users/codyrushing/mambaforge/envs/ARENAenv/bin/python"
+}
