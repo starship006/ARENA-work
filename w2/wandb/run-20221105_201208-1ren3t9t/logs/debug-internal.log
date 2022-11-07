@@ -330,3 +330,6 @@
 2022-11-05 20:12:39,460 INFO    Thread-13 :13056 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Users/codyrushing/Documents/dev/GitHub/cody_ARENA/w2/wandb/run-20221105_201208-1ren3t9t/files/config.yaml
 2022-11-05 20:12:40,804 DEBUG   HandlerThread:13056 [handler.py:handle_request():138] handle_request: stop_status
 2022-11-05 20:12:40,805 DEBUG   SenderThread:13056 [sender.py:send_request():317] send_request: stop_status
+2022-11-05 20:12:55,887 DEBUG   HandlerThread:13056 [handler.py:handle_request():138] handle_request: stop_status
+2022-11-05 20:12:55,887 DEBUG   SenderThread:13056 [sender.py:send_request():317] send_request: stop_status
+2022-11-05 20:13:04,624 INFO    MainThread:13056 [internal.py:handle_exit():78] Internal process exited
