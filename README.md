@@ -5,6 +5,8 @@ This is my collection of activities I've done. Starting from October 17, I've pu
 Some highlights of my work, so far, include:
 
 Week three:
+- Learned about, and built, basic optimizers
+- Examined scaling laws, and replicated them - I even wrote a nice little report [here!](https://wandb.ai/starship006/Scaling_Laws_CNN/reports/Reproducing-Scaling-Laws--VmlldzoyOTYwNTU4?accessToken=3tbyptjw9xdp8kc81pl1edd1zch052ug2lk2tx5svg5p8br82ejvtvpg0ozvybna)
 
 Week two:
 - Learned how to use Wandb for hyperparameter sweeps and optimization. Sample report [here](https://wandb.ai/starship006/w2d1_resnet/reports/First-Report---VmlldzoyOTE4NDAy?accessToken=9ldl319rrvdabls34mhc3z8i1uck0mgmgtmwnoi24nl6f7w90z2x2gb9o6e0ivci)
