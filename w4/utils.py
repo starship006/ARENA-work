@@ -138,7 +138,14 @@ def test_ConvTranspose2d(ConvTranspose2d, n_tests=5):
         my_conv_module = ConvTranspose2d(ci, co, kernel_size, stride, padding)
         assert "weight" in my_conv_module._parameters, "You should name your weights 'weight' in your conv module."
         my_output = my_conv_module(x)
+        # pytorch_conv_module = rearrange(my_conv_module.weight, 'out_channels in_channels kernel_height kernel_width -> in_channels out_channels kernel_height kernel_width')
         torch_output = t.conv_transpose2d(x, my_conv_module.weight, stride=stride, padding=padding)
+        
+        print(x.shape)
+        print(my_conv_module.weight.shape)
+        print("------")
+        print(my_output.shape)
+        print(torch_output.shape)
         t.testing.assert_close(my_output, torch_output, atol=1e-4, rtol=0)
     
     my_conv_module = ConvTranspose2d(20, 8, (3, 2), stride, padding)

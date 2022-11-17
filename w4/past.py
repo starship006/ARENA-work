@@ -24,6 +24,9 @@ def conv1d_minimal(x: t.Tensor, weights: t.Tensor) -> t.Tensor:
     x_new_stride = (x_B, x_IC, x_W, x_W)
     x_strided = t.as_strided(x,x_strided_shape, x_new_stride)
 
+    assert x_strided.dtype == weights.dtype, "datatypes of x_strided and weights need to be the same"
+    # print(x_strided.dtype)
+    # print(weights.dtype)
 
     output = einsum.einsum('b i w k, o i k -> b o w', x_strided, weights)
 
