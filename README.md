@@ -4,6 +4,12 @@ Cody Rushing's repository to hold exercises and open ended projects from the 202
 This is my collection of activities I've done. Starting from October 17, I've put around two-three hours a day into these.
 Some highlights of my work, so far, include:
 
+Week six:
+- Learned the fundamentals of Reinforcement Learning
+- Trained agents through iterative Policy Improvement and Policy Extraction
+
+Took a pause on week four-five; will revisit!
+
 Week three:
 - Learned about, and built, basic optimizers
 - Examined scaling laws, and replicated them - report [here!](https://wandb.ai/starship006/Scaling_Laws_CNN/reports/Reproducing-Scaling-Laws--VmlldzoyOTYwNTU4?accessToken=3tbyptjw9xdp8kc81pl1edd1zch052ug2lk2tx5svg5p8br82ejvtvpg0ozvybna)
