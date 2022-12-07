@@ -20,7 +20,7 @@ Week two:
 
 Week one:
 - Implementing a decoder-only transformer from scratch (so far it can reverse numbers!)
-- Used the baseline transformer, coupled with decoder methods, to produce my own [Shakespeare](https://github.com/starship006/ARENA-work/blob/main/w1/w1d4.ipynb) (~25 min of training with free Colab GPUs!)
+- Used the baseline transformer, coupled with decoder methods, to produce my own [Shakespeare](https://github.com/starship006/ARENA-work/blob/main/w1/w1d4.ipynb) (~25 min of training with free Colab GPUs!); play with the transformere [here!](https://huggingface.co/spaces/starship006/mini_shakespeare)
 
 Week zero:
 - Implementing CNNs from scratch
