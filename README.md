@@ -3,6 +3,8 @@ Cody Rushing's repository to hold exercises and open ended projects from the 202
 
 This is my collection of activities I've done. Starting from October 17, I've put around two-three hours a day into these.
 Some highlights of my work, so far, include:
+Week six, revisited:
+- Implemented SARSA and Q-Learning to understand the dynamics of CliffWalking
 
 Week six:
 - Learned the fundamentals of Reinforcement Learning
