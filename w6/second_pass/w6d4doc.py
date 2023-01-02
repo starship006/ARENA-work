@@ -133,6 +133,7 @@ class ReplayBuffer:
         self.rewards[self.index] = rewards
         self.dones[self.index] = dones
         self.next_observations[self.index] = next_obs
+        self.actions[self.index] = actions
 
         self.index += 1
 
@@ -267,6 +268,8 @@ if MAIN:
     assert env.observation_space.shape == (1,)
     assert env.action_space.shape == ()
 
+
+
 # %% [markdown]
 # Some setup for Weights and Biases:
 
@@ -277,11 +280,11 @@ class DQNArgs:
     seed: int = 1
     torch_deterministic: bool = True
     cuda: bool = True
-    track: bool = True
+    track: bool = False
     wandb_project_name: str = "CartPoleDQN"
     wandb_entity: Optional[str] = None
     capture_video: bool = True
-    env_id: str = "CartPole-v1"
+    env_id: str = "Probe1-v0"
     total_timesteps: int = 500000
     learning_rate: float = 0.00025
     buffer_size: int = 10000
@@ -388,54 +391,65 @@ def log(
 
 # %%
 def train_dqn(args: DQNArgs):
-    (run_name, writer, rng, device, envs) = setup(args)
-    
-    
-    # Create a Q-network, Adam optimizer, and replay buffer here.
+    run_name, writer, rng, device, envs = setup(args)
+
     obs_shape = envs.single_observation_space.shape
     num_observations = np.array(obs_shape, dtype=int).prod()
-    q_network = QNetwork(num_observations, envs.single_action_space.n)
-    adam = optim.Adam(q_network.parameters(), args.learning_rate)
+    num_actions = envs.single_action_space.n
+    q_network = QNetwork(num_observations, num_actions).to(device)
+    optimizer = optim.Adam(q_network.parameters(), lr=args.learning_rate)
 
-    targetNet = QNetwork(num_observations, envs.single_action_space.n)
-    targetNet.load_state_dict(q_network.state_dict())
+    target_network = QNetwork(num_observations, num_actions).to(device)
+    target_network.load_state_dict(q_network.state_dict())
 
-    rb = ReplayBuffer(args.batch_size, envs.single_action_space.n, obs_shape, len(envs.envs), args.seed)
-
+    rb = ReplayBuffer(args.buffer_size, num_actions, envs.single_observation_space.shape, len(envs.envs), args.seed)
 
     start_time = time.time()
     obs = envs.reset()
     for step in range(args.total_timesteps):
-        # Sample actions according to the epsilon greedy policy using the linear schedule for epsilon, and then step the environment
-        epsilon = linear_schedule(step,args.start_e, args.end_e,args.exploration_fraction, args.total_timesteps)
-        actions = epsilon_greedy_policy(envs,q_network,rng,t.from_numpy(obs),epsilon)
-        next_obs, rewards, dones, info = envs.step(actions)
-
-        "Boilerplate to handle the terminal observation case"
+        # ALGO LOGIC: put action logic here
+        epsilon = linear_schedule(step, args.start_e, args.end_e, args.exploration_fraction, args.total_timesteps)
+        actions = epsilon_greedy_policy(envs, q_network, rng, torch.Tensor(obs).to(device), epsilon)
+        assert actions.shape == (len(envs.envs),)
+        next_obs, rewards, dones, infos = envs.step(actions)
+    
+        """Boilerplate to handle the terminal observation case"""
         real_next_obs = next_obs.copy()
-        for (i, done) in enumerate(dones):
+        for i, done in enumerate(dones):
             if done:
                 real_next_obs[i] = infos[i]["terminal_observation"]
-        rb.add(obs, actions, rewards, dones, next_obs)
+        rb.add(obs, actions, rewards, dones, real_next_obs)
         obs = next_obs
+
+
         if step > args.learning_starts and step % args.train_frequency == 0:
-            "YOUR CODE: Sample from the replay buffer, compute the TD target, compute TD loss, and perform an optimizer step."
-            samples = rb.sample(args.batch_size, device=device)
-            with t.no_grad():
-                target_max = targetNet(samples.next_observations.float()).max(dim=1).values
-                td_target = (samples.rewards.flatten() + args.gamma * target_max * (1 - samples.dones.flatten().float())).float()
-
-
-            predicted_q_vals = q_network(samples.observations.float()).gather(1, rearrange(sample.actions, "a -> a 1")).float().squeeze()
-            loss = F.mse_loss(td_target, predicted_q_vals).float()            
-            adam.zero_grad()
+            data = rb.sample(args.batch_size, device)
+            with torch.no_grad():
+                target_max = target_network(data.next_observations.float()).max(dim=1).values.float()
+                td_target = data.rewards.float().flatten() + args.gamma * target_max * (1 - data.dones.float().flatten())
+            # NOTE: we asserted the action space was discrete, so this is fine
+            gather_arg = rearrange(data.actions, "a -> a 1")
+            predicted_q_vals = q_network(data.observations.float()).gather(1, gather_arg).squeeze()  # (batch, num_actions)
+            loss = F.mse_loss(td_target.float(), predicted_q_vals.float())
+            optimizer.zero_grad()
             loss.backward()
-            adam.step()
+            optimizer.step()
             if step % args.target_network_frequency == 0:
-                targetNet.load_state_dict(q_network.state_dict())
-
+                target_network.load_state_dict(q_network.state_dict())
             log(writer, start_time, step, predicted_q_vals, loss, infos, epsilon)
 
+
+    """If running one of the Probe environments, will test if the learned q-values are
+    sensible after training. Useful for debugging."""
+    # TBD: tolerances depend how long you run
+    # probably we'd rather run for less time and have looser tolerances.
+    # Maybe these should be proper tests?
+    if args.env_id == "Probe1-v0":
+        batch = t.tensor([[0.0]]).to(device)
+        value = q_network(batch)
+        print("Value: ", value)
+        expected = t.tensor([[1.0]]).to(device)
+        t.testing.assert_close(value, expected)
     envs.close()
     writer.close()
 

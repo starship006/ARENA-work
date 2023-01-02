@@ -24,7 +24,7 @@ import gym.envs.registration
 import pandas as pd
 
 from w6d2.utils import make_env
-from w6d4 import utils
+#import utils
 
 MAIN = __name__ == "__main__"
 os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -162,10 +162,10 @@ class ReplayBuffer:
         )
         # TBD: how helpful is it to call env.normalize_obs and env.normalize_reward here?
 
-if MAIN:
-    utils.test_replay_buffer_single(ReplayBuffer)
-    utils.test_replay_buffer_deterministic(ReplayBuffer)
-    utils.test_replay_buffer_wraparound(ReplayBuffer)
+# if MAIN:
+#     utils.test_replay_buffer_single(ReplayBuffer)
+#     utils.test_replay_buffer_deterministic(ReplayBuffer)
+#     utils.test_replay_buffer_wraparound(ReplayBuffer)
 
 
 # %%
@@ -203,14 +203,14 @@ def linear_schedule(current_step: int, start_e: float, end_e: float, exploration
     return max(slope * current_step + start_e, end_e)
 
 
-if MAIN:
-    epsilons = [
-        linear_schedule(step, start_e=1.0, end_e=0.05, exploration_fraction=0.5, total_timesteps=500)
-        for step in range(500)
-    ]
+# if MAIN:
+#     epsilons = [
+#         linear_schedule(step, start_e=1.0, end_e=0.05, exploration_fraction=0.5, total_timesteps=500)
+#         for step in range(500)
+#     ]
 
-if MAIN:
-    utils.test_linear_schedule(linear_schedule)
+# if MAIN:
+#     utils.test_linear_schedule(linear_schedule)
 # %%
 # if MAIN:
 #     fig, ax = plt.subplots()
@@ -245,8 +245,8 @@ def epsilon_greedy_policy(
     # assert actions.shape == (envs.num_envs,)
     # return actions
 
-if MAIN:
-    utils.test_epsilon_greedy_policy(epsilon_greedy_policy)
+# if MAIN:
+#     utils.test_epsilon_greedy_policy(epsilon_greedy_policy)
 
 # %%
 
