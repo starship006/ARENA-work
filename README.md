@@ -6,6 +6,12 @@ Some highlights of my work, so far, include:
 
 Week six, revisited:
 - Implemented SARSA and Q-Learning to solve CliffWalking and custom environments
+- Used Deep Q-Netowrks to solve the CartPole Gym environment
+
+
+
+https://user-images.githubusercontent.com/33463067/210277930-cf8289a1-d21f-4c21-88c7-8807b553fe16.mp4
+
 
 Week six:
 - Learned the fundamentals of Reinforcement Learning
