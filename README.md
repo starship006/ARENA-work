@@ -1,10 +1,10 @@
 # ARENA-work
 Cody Rushing's repository to hold exercises and open ended projects from the 2022 Virtual ARENA program
 
-This is my collection of activities I've done. Starting from October 17, I've put around two-three hours a day into these.
-Some highlights of my work, so far, include:
+This is my collection of activities I did from October to December 2022 to strengthen AI engineering skills.
 
-Week six, revisited:
+Some highlights of my work include:
+
 - Implemented SARSA and Q-Learning to solve CliffWalking and custom environments
 - Used Deep Q-Netowrks to solve the CartPole Gym environment
 
@@ -17,7 +17,7 @@ Week six:
 - Learned the fundamentals of Reinforcement Learning
 - Trained agents through iterative Policy Improvement and Policy Extraction
 
-Took a pause on week four-five; will revisit!
+[Small haitus]
 
 Week three:
 - Learned about, and built, basic optimizers
